@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "libro",uniqueConstraints = @UniqueConstraint(columnNames = {"nombre"}))
+@Table(name = "libro")
 public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,13 +23,22 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(int id, String nombre, Biblioteca biblioteca) {
-        this.id = id;
-        this.nombre = nombre;
-        this.biblioteca = biblioteca;
+    public double Detalles(double alquiler ){
+        double porcentaje = alquiler*0.03;
+        double costo = alquiler-porcentaje;
+        return costo;
     }
-    public String Moneda(String moneda){return moneda;}
-    public Double Valor (Double costo){return costo;}
+
+    public double Porcentaje(double porcentaje){
+        double alquiler = 0;
+        porcentaje = alquiler*0.03;
+        return porcentaje;
+    }
+
+    public  String Detalles(String nombreCompleto,String direccion){
+        return "Quien Alquila: "+ nombreCompleto+ ", Direccion: " + direccion ;
+    }
+
 
     public int getId() {
         return id;
@@ -43,8 +52,9 @@ public class Libro {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public String setNombre(String nombre) {
         this.nombre = nombre;
+        return nombre;
     }
 
     public Biblioteca getBiblioteca() {
