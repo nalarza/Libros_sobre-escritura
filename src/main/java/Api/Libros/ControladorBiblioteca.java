@@ -15,7 +15,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/Biblioteca")
 public class ControladorBiblioteca {
-
     @Autowired
     BibliotecaRepository bibliotecaRepository;
 
@@ -26,21 +25,16 @@ public class ControladorBiblioteca {
                 .buildAndExpand(bibliotecaGuardada.getId()).toUri();
         return ResponseEntity.created(ubicacion).body(bibliotecaGuardada);
     }
-
     @GetMapping(path = "/MostrarTodasLasBibliotecas")
     public ResponseEntity<List<Biblioteca>> mostrarBibliotecas(){
         return ResponseEntity.ok(bibliotecaRepository.findAll());
     }
-
     @DeleteMapping("/{id}")
         public ResponseEntity<Biblioteca> eliminarBiblioteca(@PathVariable Integer id){
         Optional<Biblioteca> bibliotecaOptional = bibliotecaRepository.findById(id);
         bibliotecaRepository.delete(bibliotecaOptional.get());
         return ResponseEntity.noContent().build();
     }
-
-
-
     @Autowired
     LibroRepository libroRepository;
     @PostMapping(path = "/AgregarLibro")
@@ -55,7 +49,6 @@ public class ControladorBiblioteca {
         }
 
     }
-
     @GetMapping(path = "/MostrarLibros")
     public ResponseEntity<List<Libro>> mostarLibros(){
         return ResponseEntity.ok(libroRepository.findAll());
@@ -65,7 +58,6 @@ public class ControladorBiblioteca {
         Optional<Libro> libroOptional = libroRepository.findById(id);
         return ResponseEntity.ok(libroOptional.get());
     }
-
     @GetMapping(path = "/librosVip")
     public List<Object>  librosVip(@RequestParam double costoAlquiler, @RequestParam int idLibro,
                                    @RequestParam int idPersona, @RequestParam int idBiblioteca) {
@@ -90,15 +82,12 @@ public class ControladorBiblioteca {
                 }
             }
         } catch (Exception e) {
-            return Arrays.asList("La Biblioteca, La Persona O El lIbro No Existen "+e);
+            return Arrays.asList("La Biblioteca, La Persona O El lIbro No Existen "+e,HttpStatus.BAD_REQUEST);
         }
-
         return Arrays.asList();
     }
-
     @Autowired
     PersonaRepository personaRepository;
-
     @PostMapping(path = "/Agreagar/personas")
     public ResponseEntity<Persona> guardarPersonas(@Valid @RequestBody Persona persona){
         Persona PersonaGuardada = personaRepository.save(persona);
